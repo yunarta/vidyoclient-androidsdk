@@ -1,15 +1,41 @@
+plugins {
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-4'
+}
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+repositories {
+    jcenter()
+    google()
+    maven { url 'https://jitpack.io' }
+    maven {
+        credentials {
+            username 'android'
+            password 'android2192'
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+        url 'https://client-ci.vcube.sg:8081/artifactory/blackhole/'
+    }
+}
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
     defaultConfig {
-        applicationId "com.vidyo.vidyoconnector"
+        applicationId 'com.vidyo.vidyoconnector'
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
     }
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,15 +46,36 @@ android {
             debuggable true
         }
     }
+
     sourceSets {
         main {
-            jniLibs.srcDirs = ['../../../../lib/android']
+            java.srcDirs += ['src/main/kotlin']
+        }
+    }
+
+    detekt {
+        version = '1.0.0.RC6-4'
+        defaultProfile {
+            input = file('src/main/kotlin')
+            filters = '.*/resources/.*,.*/build/.*'
+            config = file('default-detekt-config.yml')
+            output = file('reports')
+            outputName = 'detekt-report'
+            baseline = file('reports/baseline.xml')
         }
     }
 }
 
 dependencies {
-    implementation files('../../../../lib/android/vidyoclient.jar')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    kapt 'com.android.databinding:compiler:3.1.2'
+//    implementation files('lib/lib-release.aar')
+    implementation 'com.vidyo:VidyoClient:4.1.21.7'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'org.javatuples:javatuples:1.2'
+    implementation 'com.github.pakoito:RxTuples2:1.0.0'
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }
