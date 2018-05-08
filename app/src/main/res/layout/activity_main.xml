@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context="com.vidyo.app.vidyoclient.MainActivity">
 
     <data>
 
@@ -61,14 +61,17 @@
             app:showBlock="@{safeUnbox(view.isShowInput)}">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:contentDescription="vidyo_logo"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/vidyo_logo"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:maxWidth="240dp"
                 android:paddingBottom="0dp"
-                android:src="@drawable/vidyo_io_vertical_dark_at_2x" />
+                android:scaleType="centerInside"
+                android:src="@drawable/vidyo_io_vertical_dark" />
 
 
             <LinearLayout
@@ -79,23 +82,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:layout_marginEnd="5dp"
                     android:width="110dp"
                     android:gravity="end"
                     android:maxLines="1"
-                    android:paddingEnd="5dp"
-                    android:text="Host"
+                    android:text="@string/host"
                     android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/hostTextBox"
+                    style="@style/AppTheme.Widget.EditText.Connection"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:background="@android:color/transparent"
-                    android:elegantTextHeight="true"
                     android:enabled="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="example.vidyo.io"
+                    android:hint="@string/host_hint"
                     android:inputType="text"
                     android:paddingEnd="5dp"
                     android:paddingStart="5dp"
@@ -112,23 +115,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:layout_marginEnd="5dp"
                     android:width="110dp"
                     android:gravity="end"
                     android:maxLines="1"
-                    android:paddingEnd="5dp"
-                    android:text="Token"
+                    android:text="@string/token"
                     android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/tokenTextBox"
+                    style="@style/AppTheme.Widget.EditText.Connection"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:background="@android:color/transparent"
-                    android:elegantTextHeight="true"
                     android:enabled="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="required"
+                    android:hint="@string/token_hint"
                     android:inputType="text"
                     android:paddingEnd="5dp"
                     android:paddingStart="5dp"
@@ -145,23 +148,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:layout_marginEnd="5dp"
                     android:width="110dp"
                     android:gravity="end"
                     android:maxLines="1"
-                    android:paddingEnd="5dp"
-                    android:text="Display Name"
+                    android:text="@string/display_name"
                     android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/displayNameTextBox"
+                    style="@style/AppTheme.Widget.EditText.Connection"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:background="@android:color/transparent"
-                    android:elegantTextHeight="true"
                     android:enabled="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="your name"
+                    android:hint="@string/your_name"
                     android:inputType="text"
                     android:paddingEnd="5dp"
                     android:paddingStart="5dp"
@@ -178,23 +181,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:layout_marginEnd="5dp"
                     android:width="110dp"
                     android:gravity="end"
                     android:maxLines="1"
-                    android:paddingEnd="5dp"
-                    android:text="Resource ID"
+                    android:text="@string/resource_id"
                     android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/resourceIdTextBox"
+                    style="@style/AppTheme.Widget.EditText.Connection"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:background="@android:color/transparent"
-                    android:elegantTextHeight="true"
                     android:enabled="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="required"
+                    android:hint="@string/resource_id_hint"
                     android:inputType="text"
                     android:paddingEnd="5dp"
                     android:paddingStart="5dp"
@@ -225,7 +228,7 @@
                     android:paddingStart="2dp"
                     android:text="@{connector.version}"
                     android:textColor="#ff0000"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     app:show="@{safeUnbox(view.isShowVersion)}"
                     tools:text="VidyoClient-AndroidSDK 0.0.0.0"
                     tools:visibility="visible" />
@@ -306,6 +309,44 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
+            android:background="#000"
+            android:gravity="center_horizontal|bottom"
+            android:maxLines="1"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
+            android:shadowColor="#0d0d0d"
+            android:shadowDx="-3.0"
+            android:shadowDy="-3.0"
+            android:shadowRadius="2.0"
+            android:textColor="#f1f1f1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center_horizontal|bottom"
+            android:maxLines="1"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
+            android:shadowColor="#0d0d0d"
+            android:shadowDx="-3.0"
+            android:shadowDy="-3.0"
+            android:shadowRadius="2.0"
+            android:textColor="#f1f1f1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:textRes="@{safeUnbox(view.connectionStatusResource)}" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:gravity="center_horizontal|bottom"
             android:maxLines="1"
             android:paddingEnd="2dp"
@@ -318,8 +359,7 @@
             android:textColor="#f1f1f1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:background="#000000" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ToggleButton
             android:id="@+id/toggle_debug"

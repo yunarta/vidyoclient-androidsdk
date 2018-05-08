@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set +e
+$ANDROID_HOME/emulator/emulator @$PREF_SIMULATOR&
+echo "Emulator is started"
