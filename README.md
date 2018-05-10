@@ -1,4 +1,4 @@
-![inspection](http://sonarqube.dogeza.club:18090/api/project_badges/measure?project=Vidyo%3AVidyoClient-AndroidSDK&metric=alert_status)
+![inspection](http://sonarqube.dogeza.club:18090/api/project_badges/measure?project=Vidyo%3AVidyoClient-AndroidSDK%3Amaster&metric=alert_status)
 
 VidyoClient Example - Android SDK
 ---------------------------------
