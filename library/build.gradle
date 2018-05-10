@@ -28,7 +28,6 @@ jacoco {
     reportsDir = file("$buildDir/reports")
 }
 
-
 android {
     compileSdkVersion 27
 
