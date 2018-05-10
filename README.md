@@ -6,11 +6,13 @@ VidyoClient Example - Android SDK
 This example is written in Kotlin
 
 Includes
+
 - Dagger for dependency injection
 - RxJava 2
 - Android Architecture SDK
 
 Testing
+
 - Mockito
 - Powermock
 - Robolectric
