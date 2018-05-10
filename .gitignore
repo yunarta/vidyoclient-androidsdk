@@ -1,6 +1,8 @@
 .gradle
 .idea
+reports/
 build/
 
 *.iml
 local.properties
+.scannerwork

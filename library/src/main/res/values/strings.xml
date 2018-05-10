@@ -1,0 +1,8 @@
+<resources>
+    <string name="connection_state_idle">Ready to Connect</string>
+    <string name="connection_state_connecting">Connecting…</string>
+    <string name="connection_state_connected">Connected</string>
+    <string name="connection_state_disconnecting">Disconnecting…</string>
+    <string name="connection_state_disconnected">Disconnected</string>
+    <string name="connection_state_failure_invalid_resource">Connection failed</string>
+</resources>

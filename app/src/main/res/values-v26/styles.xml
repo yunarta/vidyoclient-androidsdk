@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Widget.EditText.Connection">
+        <item name="android:elegantTextHeight">true</item>
+        <item name="android:autofillHints">null</item>
+        <item name="android:importantForAutofill">no</item>
+    </style>
+</resources>
