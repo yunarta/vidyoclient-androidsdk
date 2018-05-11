@@ -23,18 +23,21 @@ stage('Configure') {
 
 stage('Pre-Build') {
     node('messaging') {
-        httpRequest contentType: 'APPLICATION_JSON',
-                customHeaders: [[name: 'Authorization', value: 'Basic KzJp5B7mDpZ7kMHv67GowQRys9W9Hbaa5Rzj4PCoiyXfTk1fGAvH']],
-                httpMode: 'POST',
-                requestBody: JsonOutput.toJson([
-                        "key"     : "${buildTag}",
-                        "state"   : "in_progress",
-                        "url"     : "${env.RUN_DISPLAY_URL}",
-                        "name"    : "${env.JOB_NAME}",
-                        "project" : "vidyoclient-androidsdk",
-                        "revision": "${gitCommit}",
-                ]),
-                url: 'http://apps.up.dogeza.club:18090/~buildStatus/'
+        try {
+            httpRequest contentType: 'APPLICATION_JSON',
+                    customHeaders: [[name: 'Authorization', value: 'Basic KzJp5B7mDpZ7kMHv67GowQRys9W9Hbaa5Rzj4PCoiyXfTk1fGAvH']],
+                    httpMode: 'POST',
+                    requestBody: JsonOutput.toJson([
+                            "key"     : "${buildTag}",
+                            "state"   : "in_progress",
+                            "url"     : "${env.RUN_DISPLAY_URL}",
+                            "name"    : "${env.JOB_NAME}",
+                            "project" : "vidyoclient-androidsdk",
+                            "revision": "${gitCommit}",
+                    ]),
+                    url: 'http://apps.up.dogeza.club:18090/~buildStatus/'
+        } catch (err) {
+        }
     }
 }
 
@@ -98,19 +101,22 @@ try {
 } finally {
     stage('End-Build') {
         node('messaging') {
-            httpRequest contentType: 'APPLICATION_JSON',
-                    customHeaders: [[name: 'Authorization', value: 'Basic KzJp5B7mDpZ7kMHv67GowQRys9W9Hbaa5Rzj4PCoiyXfTk1fGAvH']],
-                    httpMode: 'POST',
-                    requestBody: JsonOutput.toJson([
-                            "key"        : "${buildTag}",
-                            "state"      : buildFailed ? "failed" : "success",
-                            "url"        : "${env.RUN_DISPLAY_URL}",
-                            "name"       : "${env.JOB_NAME}",
-                            "description": buildFailed ? "Build failed ${errorString}" : "",
-                            "project"    : "vidyoclient-androidsdk",
-                            "revision"   : "${gitCommit}",
-                    ]),
-                    url: 'http://apps.up.dogeza.club:18090/~buildStatus/'
+            try {
+                httpRequest contentType: 'APPLICATION_JSON',
+                        customHeaders: [[name: 'Authorization', value: 'Basic KzJp5B7mDpZ7kMHv67GowQRys9W9Hbaa5Rzj4PCoiyXfTk1fGAvH']],
+                        httpMode: 'POST',
+                        requestBody: JsonOutput.toJson([
+                                "key"        : "${buildTag}",
+                                "state"      : buildFailed ? "failed" : "success",
+                                "url"        : "${env.RUN_DISPLAY_URL}",
+                                "name"       : "${env.JOB_NAME}",
+                                "description": buildFailed ? "Build failed ${errorString}" : "",
+                                "project"    : "vidyoclient-androidsdk",
+                                "revision"   : "${gitCommit}",
+                        ]),
+                        url: 'http://apps.up.dogeza.club:18090/~buildStatus/'
+            } catch (err) {
+            }
         }
     }
 }

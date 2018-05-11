@@ -42,7 +42,7 @@ import javax.inject.Inject
 open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     private val logger = Logger.getLogger("vidyo.main")
-    private var mRefreshSettings = true
+    private var mRefreshSettings = false
 
     private var contentView: ActivityMainBinding? = null
     private var videoFrame: View? = null
@@ -59,7 +59,7 @@ open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
         PublishSubject.create<Boolean>()
     }
 
-    private var configure = PublishSubject.create<Intent>()
+    private var configure = PublishSubject.create<Pair<Intent, Boolean>>()
     private lateinit var bootstrap: Disposable
 
     private var mutableIsInitialized: Boolean = false
@@ -100,6 +100,8 @@ open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
         bootstrap = bootstrap().subscribe()
 
         bindContentView()
+
+        mRefreshSettings = savedInstanceState == null
     }
 
     private fun bindContentView() {
@@ -147,12 +149,12 @@ open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         logger.finest("onStart")
         super.onStart()
-        configure.onNext(intent)
+
+        configure.onNext(Pair(intent, mRefreshSettings))
     }
 
     override fun onResume() {
         logger.finest("onResume")
-        println("onResume")
         super.onResume()
 
         isResumed = true
@@ -162,7 +164,6 @@ open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onPause() {
         logger.finest("onPause")
-        println("onPause")
         super.onPause()
         isResumed = false
         connectorController.stop()
@@ -170,7 +171,6 @@ open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onStop() {
         logger.finest("onStop")
-        println("onStop")
         super.onStop()
 
         if (!connectorController.isRunning) {
@@ -258,10 +258,11 @@ open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
     }
 
     private fun bootstrap() =
-            configure.doOnNext {
-                if (connectorController.isRunning) {
+            configure.map {
+                if (connectorController.isRunning && it.second) {
                     connectorController.disconnect()
                 }
+                it.first
             }.map {
                 val useUri = intent.data != null
                 Pair(if (useUri) ConnectionData.create(intent.data) else {

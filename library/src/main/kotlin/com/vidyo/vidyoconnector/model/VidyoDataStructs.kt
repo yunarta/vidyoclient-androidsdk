@@ -30,8 +30,8 @@ class OptionsData(
         val hideConfig: Boolean = false,
         val autoJoin: Boolean = false,
         val allowReconnect: Boolean = true,
-        var cameraPrivacy: Boolean = false,
-        var microphonePrivacy: Boolean = false,
+        val cameraPrivacy: Boolean = false,
+        val microphonePrivacy: Boolean = false,
         val enableDebug: Boolean = false,
         val experimentalOptions: String? = null,
         val returnURL: String? = null
