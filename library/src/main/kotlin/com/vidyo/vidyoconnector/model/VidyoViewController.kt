@@ -96,6 +96,7 @@ internal class MutableVidyoViewController : VidyoViewController {
                 else -> {
                     stateIntDescription.getOrDefault(it, 0).let {
                         mutableConnectionStatusResource.postValue(it)
+                        mutableConnectionStatus.postValue("")
                     }
                 }
             }
