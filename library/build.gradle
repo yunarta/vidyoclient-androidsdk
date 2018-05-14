@@ -1,9 +1,9 @@
-Properties properties = new Properties()
-properties.load project.rootProject.file('project.properties').newDataInputStream()
-
 plugins {
     id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-4'
 }
+
+Properties properties = new Properties()
+properties.load project.rootProject.file('project.properties').newDataInputStream()
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
