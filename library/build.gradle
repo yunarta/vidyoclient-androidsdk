@@ -1,3 +1,6 @@
+Properties properties = new Properties()
+properties.load project.rootProject.file('project.properties').newDataInputStream()
+
 plugins {
     id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-4'
 }
@@ -35,7 +38,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName properties.getOrDefault("library.version", "1.0.0")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

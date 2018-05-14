@@ -91,7 +91,12 @@ try {
     stage('SonarQube') {
         node(selectedNode) {
             if (["develop", "master"].contains("${env.BRANCH_NAME}".toString())) {
-                sh "sonar-scanner -Dsonar.projectVersion=$BUILD_NUMBER -Dsonar.branch=${env.BRANCH_NAME}"
+
+                def properties = new Properties()
+                properties.load(new StringReader(readFile('project.properties')))
+                def version = properties.getOrDefault("library.version", "1.0.0")
+
+                sh "sonar-scanner -Dsonar.projectVersion=$BUILD_NUMBER -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.projectVersion=${version}"
             }
         }
     }
