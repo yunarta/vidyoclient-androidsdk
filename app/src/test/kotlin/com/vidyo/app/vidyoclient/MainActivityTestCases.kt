@@ -2,6 +2,9 @@ package com.vidyo.app.vidyoclient
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.view.View
+import android.view.ViewTreeObserver
+import com.nhaarman.mockito_kotlin.whenever
 import com.vidyo.VidyoClient.Connector.Connector
 import com.vidyo.app.vidyoclient.MainActivity.Companion.PERMISSIONS_REQUEST_ALL
 import com.vidyo.vidyoconnector.model.VidyoConnectorController
@@ -11,6 +14,10 @@ import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
@@ -75,8 +82,23 @@ class `MainActivity tests` : Base() {
     fun `test grant permission`() {
         val buildActivity = Robolectric.buildActivity(MainActivity::class.java)
         val activity = buildActivity.get()
+        val mockView = mock(View::class.java)
+        val mockViewTreeObserver = mock(ViewTreeObserver::class.java)
 
-        buildActivity.setup()
+        val listenerCaptor = ArgumentCaptor.forClass(ViewTreeObserver.OnGlobalLayoutListener::class.java)
+        whenever(mockViewTreeObserver.isAlive).thenReturn(true)
+        whenever(mockViewTreeObserver.addOnGlobalLayoutListener(ArgumentMatchers.any())).then {
+            verify(mockViewTreeObserver).addOnGlobalLayoutListener(listenerCaptor.capture())
+            listenerCaptor.value.onGlobalLayout()
+        }
+
+        whenever(mockView.width).thenReturn(100)
+        whenever(mockView.height).thenReturn(100)
+        whenever(mockView.viewTreeObserver).thenReturn(mockViewTreeObserver)
+
+        buildActivity.create()
+        activity.videoFrame = mockView
+        buildActivity.start().postCreate(null).resume().visible()
 
         Shadows.shadowOf(activity).grantPermissions(
                 Manifest.permission.CAMERA,

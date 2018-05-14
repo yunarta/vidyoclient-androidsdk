@@ -45,7 +45,7 @@ open class MainActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private var mRefreshSettings = false
 
     private var contentView: ActivityMainBinding? = null
-    private var videoFrame: View? = null
+    var videoFrame: View? = null
 
     private var connectorController: VidyoConnectorController = VidyoConnectorControllerStub()
     private var viewController: VidyoViewController = VidyoViewControllerStub()
