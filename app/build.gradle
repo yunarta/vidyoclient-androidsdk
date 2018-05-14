@@ -180,7 +180,7 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.2.41"
 
     implementation project(':library')
     testImplementation project(path: ":library", configuration: "unitTestArtifact")
