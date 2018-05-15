@@ -9,7 +9,7 @@ val View.sizeNotConfigured: Boolean
     }
 
 fun View.executeOnGlobalLayoutEvent(closure: (View) -> Unit) {
-    if (sizeNotConfigured) {
+    if (!sizeNotConfigured) {
         if (viewTreeObserver.isAlive) {
             viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {

@@ -91,8 +91,6 @@ class `OptionsData tests` {
     fun `basic test`() {
         val a = OptionsData()
         assertDefaults(a)
-        assertEquals(true, a.apply { cameraPrivacy = true }.cameraPrivacy)
-        assertEquals(true, a.apply { microphonePrivacy = true }.microphonePrivacy)
     }
 
     @Test
