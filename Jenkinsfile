@@ -92,9 +92,8 @@ try {
         node(selectedNode) {
             if (["develop", "master"].contains("${env.BRANCH_NAME}".toString())) {
 
-                def properties = new Properties()
-                properties.load(new StringReader(readFile('project.properties')))
-                def version = properties.getOrDefault("library.version", "1.0.0")
+                def properties = readProperties defaults: ["library.version": "1.0.0"], file: 'project.properties'
+                def version = properties.get("library.version")
 
                 sh "sonar-scanner -Dsonar.projectVersion=$BUILD_NUMBER -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.projectVersion=${version}"
             }
@@ -103,6 +102,7 @@ try {
 } catch (err) {
     buildFailed = true
     errorString = err.toString()
+    echo errorString
 } finally {
     stage('End-Build') {
         node('messaging') {
