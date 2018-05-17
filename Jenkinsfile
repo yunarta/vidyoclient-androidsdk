@@ -1,8 +1,9 @@
 import groovy.json.JsonOutput
 
 properties([
-        buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '25')),
-        disableConcurrentBuilds()
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')),
+        disableConcurrentBuilds(),
+        pipelineTriggers([cron('H H(18-23) * * *')])
 ])
 
 selectedNode = "android"

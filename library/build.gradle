@@ -11,19 +11,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco'
 
 repositories {
-    jcenter()
-    google()
-    maven { url 'https://jitpack.io' }
-    maven {
-        credentials {
-            username 'android'
-            password 'android2192'
-        }
-        authentication {
-            basic(BasicAuthentication)
-        }
-        url 'https://client-ci.vcube.sg:8081/artifactory/blackhole/'
-    }
 }
 
 jacoco {

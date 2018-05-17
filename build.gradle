@@ -3,9 +3,11 @@
 buildscript {
     ext.kotlin_version = '1.2.41'
     repositories {
-        google()
-        jcenter()
+        maven {
+            url 'http://repo.dogeza.club:18090/artifactory/android/'
+        }
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0-alpha13'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -16,7 +18,15 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
-        google()
+        maven {
+            credentials {
+                username 'android'
+                password 'android2192'
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+            url 'http://repo.dogeza.club:18090/artifactory/android/'
+        }
     }
 }
